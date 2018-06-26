@@ -16,14 +16,13 @@ io.on('connection', (socket) => {
   a=a+1;
   console.log(`New user connected: ${a}`);
 
-  socket.emit('newMessage', {
-    from: 'James',
-    text: 'Hello am i',
-    createAt: 123
-  });
-
   socket.on('createMessage', (message) => {
     console.log('createMess',message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createAt: new Date().getTime()
+    });
   })
   socket.on('disconnect', () => {
     a=a-1;
