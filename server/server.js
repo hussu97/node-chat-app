@@ -5,7 +5,7 @@ const path     = require('path'),
 
 var a =0;
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 
 const port = process.env.PORT || 3000;
 const publicPath = path.join(__dirname,'../public');
@@ -28,13 +28,12 @@ io.on('connection', (socket) => {
     console.log('createMessage',message);
     io.emit('newMessage',generateMessage(message.from,message.text));
     callback();
-    //broadcast sends to every user except the current one
-    // socket.broadcast.emit('newMessage', {
-    //   from: message.from,
-    //   text: message.text,
-    //   createAt: new Date().getTime()
-    // });
-  })
+  });
+
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin',coords.latitude,coords.longitude))
+  });
+
   socket.on('disconnect', () => {
     a=a-1;
     console.log(`User was disconnected: ${a}`);
