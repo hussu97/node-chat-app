@@ -30,7 +30,8 @@ $ npm install
 ``` bash
 $ npm start
 ```
-4. Have fun chatting!
+4. Go to http://localhost:3000/ to view your application
+5. Have fun chatting!
 
 ## Screenshots
 
